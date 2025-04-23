@@ -7,4 +7,4 @@ RUN apt-get update && apt-get install -y curl gnupg unzip
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
 # Télécharger le modèle Mistral au démarrage
-CMD ["sh", "-c", "ollama serve --host 0.0.0.0 & sleep 3 && ollama pull mistral && wait"]
+CMD ["sh", "-c", "ollama pull mistral && ollama serve"]
