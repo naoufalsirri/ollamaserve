@@ -3,6 +3,7 @@ services:
     name: ollama-server
     env: docker
     plan: free
-    dockerContext: .
-    healthCheckPath: /
-    autoDeploy: false
+    autoDeploy: true
+    ports:
+      - port: 11434
+        protocol: http

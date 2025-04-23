@@ -1,21 +1,10 @@
 FROM ubuntu:22.04
 
-# Installer les dépendances nécessaires
-RUN apt-get update && apt-get install -y \
-    curl \
-    ca-certificates \
-    gnupg \
-    unzip
+# Installer curl, ollama, etc.
+RUN apt-get update && apt-get install -y curl gnupg unzip
 
-# Ajouter l'utilisateur ollama
-RUN useradd -m ollama
+# Télécharger et installer Ollama
+RUN curl -fsSL https://ollama.com/install.sh | sh
 
-# Installer Ollama
-RUN curl -fsSL https://ollama.com/install.sh | bash
-
-# Passer à l'utilisateur ollama
-USER ollama
-WORKDIR /home/ollama
-
-# Lancer le serveur
-CMD ["ollama", "serve"]
+# Télécharger le modèle Mistral au démarrage
+CMD ["sh", "-c", "ollama serve --host 0.0.0.0 & sleep 3 && ollama pull mistral && wait"]
