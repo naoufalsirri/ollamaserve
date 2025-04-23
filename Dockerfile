@@ -1,10 +1,11 @@
-FROM ubuntu:22.04
+# Étape 1 : Utilise l'image officielle
+FROM ollama/ollama
 
-# Installer curl, ollama, etc.
-RUN apt-get update && apt-get install -y curl gnupg unzip
+# Étape 2 : Télécharge le modèle mistral pendant la phase de build
+RUN ollama pull mistral
 
-# Télécharger et installer Ollama
-RUN curl -fsSL https://ollama.com/install.sh | sh
+# Étape 3 : Expose le port utilisé par ollama
+EXPOSE 11434
 
-# Télécharger le modèle Mistral au démarrage
-CMD ["sh", "-c", "ollama pull mistral && ollama serve --host 0.0.0.0"]
+# Étape 4 : Lance le serveur
+CMD ["ollama", "serve"]
