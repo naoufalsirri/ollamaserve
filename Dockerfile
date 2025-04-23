@@ -1,11 +1,9 @@
-# Étape 1 : Utilise l'image officielle
 FROM ollama/ollama
 
-# Étape 2 : Télécharge le modèle mistral pendant la phase de build
-RUN ollama pull mistral
-
-# Étape 3 : Expose le port utilisé par ollama
+# Expose le port utilisé par Ollama
 EXPOSE 11434
 
-# Étape 4 : Lance le serveur
-CMD ["ollama", "serve"]
+# Commande de démarrage :
+# - Démarre le serveur
+# - Tire le modèle mistral juste après (en tâche de fond)
+CMD ["sh", "-c", "ollama serve & sleep 5 && ollama pull mistral && wait"]
